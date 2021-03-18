@@ -1,4 +1,4 @@
-# FiveM-status-bot
+# Discord bot for statuses of FiveM servers
 ## Velocity Networks
 ### In-service
 
