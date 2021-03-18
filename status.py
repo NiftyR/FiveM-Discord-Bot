@@ -89,6 +89,6 @@ class MyClient(discord.Client):
 						StatusEmbed.add_field(name=serverObj["DisplayName"], value=":red_circle: No response <:pepesad:666781477236768768>\n\n I'm probably just offline", inline=True)
 			await self.ActiveMessageObject.edit(content=None, embed=StatusEmbed) # edit the message object
 			self.Counter+=1 # incremement counter by one
-			sleep(Delay) # wait for specified delay in seconds
+			sleep(self.Delay) # wait for specified delay in seconds
 client=MyClient(CounterCap, Servers, ChannelID, EmbedTitle, UpdateDelay, PublicIP) # instanciate client from class
 client.run(BotToken) # run client with specified bot token
