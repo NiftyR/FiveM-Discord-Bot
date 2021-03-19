@@ -11,7 +11,7 @@ Feel free to DM me on Discord (@JCF#7536) if you have any issues/questions.
 
 
 
-
+## Licensing
 MIT License
 
 Copyright (c) 2021 JCF#7536
