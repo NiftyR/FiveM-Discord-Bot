@@ -1,6 +1,6 @@
 # FiveM Discord Bot
 ## Velocity Networks
-### In-service
+### Status: in-service
 
 This is a basic python script that gets the status of all our servers.
 All code is commented.
