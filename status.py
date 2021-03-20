@@ -39,6 +39,8 @@ UpdateDelay=5 # DELAY FOR STATUS TO UPDATE (SECONDS)
 CounterCap=30 # HOW MANY TIMES THE MESSAGE SHOULD UPDATE BEFORE IT IS REGENERATED
 PublicIP="velocitynetworks.org" # PUBLIC IP TO DISPLAY
 BotToken="lmao no" # BOT TOKEN 
+ServerUpNotice=":green_circle: " # TEXT TO SHOW IF THE SERVER IS ONLINE
+ServerDownNotice=":red_circle: No response <:pepesad:666781477236768768>\n\n I'm probably just offline" # TEXT TO SHOW IF THE SERVER IS OFFLINE/NOT RESPONDING
 
 #######################################
 #######################################
@@ -57,7 +59,7 @@ except ImportError as module: # if an import error is raised
 	exit() # halt execution
 
 class MyClient(discord.Client):
-	def __init__(self, CounterCap, Servers, ChannelID, EmbedTitle, Delay, PublicIP):
+	def __init__(self, CounterCap, Servers, ChannelID, EmbedTitle, Delay, PublicIP, AliveNotice, DeadNotice):
 		super().__init__() # inherit parent class' attributes (discord.Client)
 		self.ChannelObject=None
 		self.ActiveMessageObject=None
@@ -68,7 +70,8 @@ class MyClient(discord.Client):
 		self.EmbedTitle=EmbedTitle
 		self.Delay=Delay
 		self.PublicIP=PublicIP
-
+		self.AliveNotice=AliveNotice
+		self.DeadNotice=DeadNotice
 	async def on_ready(self): # when bot is ready
 		print('Connected as {0}!'.format(self.user)) # identify self in conssole
 		self.ChannelObject=await self.fetch_channel(self.ChannelID) # get channel from id specified
@@ -83,12 +86,12 @@ class MyClient(discord.Client):
 					StatusEmbed.add_field(name="\u200b", value="\u200b", inline=False) # insert blanking object
 				else:
 					try:
-						StatusEmbed.add_field(name=serverObj["DisplayName"], value=":green_circle: "+str(len(requests.get(serverObj["URL"]+"/players.json", timeout=2, verify=False).json()))+"/32 players"+" <:pepecool:666781477224054814>"+"\n\nFind me on the FiveM server listings!\nDirect connect via: `"+PublicIP+":"+serverObj["URL"][-5:]+"`", inline=True)
+						StatusEmbed.add_field(name=serverObj["DisplayName"], value=self.AliveNotice+str(len(requests.get(serverObj["URL"]+"/players.json", timeout=2, verify=False).json()))+"/32 players"+" <:pepecool:666781477224054814>"+"\n\nFind me on the FiveM server listings!\nDirect connect via: `"+PublicIP+":"+serverObj["URL"][-5:]+"`", inline=True)
 						# runs HTTP request to specified endpoint with a timeout of 2 seconds, encodes it into JSON then gets the length of it (to get number of players). Verify is false because who needs SSL anyway :shrug:
 					except: # if this errors (endpoint isn't reachable)
-						StatusEmbed.add_field(name=serverObj["DisplayName"], value=":red_circle: No response <:pepesad:666781477236768768>\n\n I'm probably just offline", inline=True)
+						StatusEmbed.add_field(name=serverObj["DisplayName"], value=self.DeadNotice, inline=True)
 			await self.ActiveMessageObject.edit(content=None, embed=StatusEmbed) # edit the message object
 			self.Counter+=1 # incremement counter by one
 			sleep(self.Delay) # wait for specified delay in seconds
-client=MyClient(CounterCap, Servers, ChannelID, EmbedTitle, UpdateDelay, PublicIP) # instanciate client from class
+client=MyClient(CounterCap, Servers, ChannelID, EmbedTitle, UpdateDelay, PublicIP, ServerUpNotice, ServerDownNotice) # instanciate client from class
 client.run(BotToken) # run client with specified bot token
