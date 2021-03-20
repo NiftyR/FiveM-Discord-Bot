@@ -12,8 +12,7 @@
 - open bot tab on left, then press "Add Bot"
 
 ## Step 2 - add bot to your server
-- copy your bot's client ID into this string and go to it in your web browser (you can get your client ID from the bot's "General Information" tab)
-	https://discord.com/oauth2/authorize?client_id=CLIENTIDGOESHERE&scope=bot
+- copy your bot's client ID into this string and go to it in your web browser - you can get your client ID from the bot's "General Information" tab (https://discord.com/oauth2/authorize?client_id=CLIENTIDGOESHERE&scope=bot)
 
 ## Step 3 - configure the bot
 - enable Developer Mode in Discord (https://www.discordtips.com/how-to-enable-developer-mode-in-discord/)
