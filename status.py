@@ -94,4 +94,4 @@ class MyClient(discord.Client):
 			self.Counter+=1 # incremement counter by one
 			sleep(self.Delay) # wait for specified delay in seconds
 client=MyClient(CounterCap, Servers, ChannelID, EmbedTitle, UpdateDelay, PublicIP, ServerUpNotice, ServerDownNotice) # instanciate client from class
-client.run(BotToken) # run client with specified bot token
+client.run(BotToken, reconnect=True) # run client with specified bot token
